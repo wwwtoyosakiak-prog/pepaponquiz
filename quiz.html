@@ -87,6 +87,22 @@ main{max-width:1120px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
 .admin-link{text-align:center;margin-top:1rem}
 .admin-link a{color:var(--bm);font-size:12px;text-decoration:none;border-bottom:1px dashed var(--bm);opacity:.6}
 
+body.title-screen .h-inner{padding:.85rem 1.5rem .75rem}
+body.title-screen .h-label{margin-bottom:.35rem}
+body.title-screen .h-title{font-size:clamp(2rem,4.5vw,3rem)}
+body.title-screen .h-sub{margin-top:.15rem}
+body.title-screen main{max-width:none;padding:1rem 1.25rem 5rem}
+body.title-screen #s-title{width:min(1360px,100%);max-width:1360px}
+body.title-screen .title-slide{min-height:calc(100vh - 15.5rem);margin-bottom:0;padding:1.55rem 2rem}
+body.title-screen .title-slide-label{margin-bottom:.65rem}
+body.title-screen .title-slide-main{font-size:clamp(2.5rem,5.5vw,4.6rem);margin-bottom:.3rem}
+body.title-screen .title-slide-sub{font-size:clamp(14px,1.5vw,18px);line-height:1.65;margin-bottom:1.15rem}
+body.title-screen .title-deco{margin-bottom:1.25rem}
+body.title-screen .info-cards{margin-bottom:1.25rem}
+body.title-screen .info-card{padding:.75rem .65rem}
+body.title-screen .info-card-icon{font-size:1.25rem;margin-bottom:.2rem}
+body.title-screen .info-card-val{font-size:.95rem}
+
 /* ── QUIZ ── */
 .prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:1.1rem}
 .prog-label{font-size:12px;color:var(--ts);white-space:nowrap;font-weight:500}
@@ -387,9 +403,21 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   .g-nav-link{text-align:center;padding:7px 8px}
   #bgm-btn{width:100%;min-height:36px}
   .title-slide{padding:1.6rem 1rem}
+  body.title-screen main{padding:.85rem .85rem 10rem}
+  body.title-screen .h-inner{padding:.75rem 1rem .65rem}
+  body.title-screen .h-title{font-size:clamp(1.7rem,10vw,2.6rem)}
+  body.title-screen .title-slide{min-height:auto;padding:1.2rem .9rem}
+  body.title-screen .title-slide-main{font-size:clamp(2rem,11vw,3rem)}
+  body.title-screen .title-slide-sub{font-size:13px;line-height:1.55;margin-bottom:.9rem}
   .title-deco{gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+  body.title-screen .title-deco{margin-bottom:.85rem}
   .deco-chip{font-size:11px;padding:5px 10px}
   .info-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.title-screen .info-cards{gap:6px;margin-bottom:.9rem}
+  body.title-screen .info-card{padding:.58rem .45rem}
+  body.title-screen .info-card-icon{font-size:1.05rem;margin-bottom:.1rem}
+  body.title-screen .info-card-label{font-size:10px}
+  body.title-screen .info-card-val{font-size:.82rem}
   .title-start-btn{width:100%;padding:.9rem 1rem}
   .vote-grid{gap:8px}
   .q-card,.fb{padding:1.1rem 1rem}
@@ -421,7 +449,10 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   main{max-width:1360px;padding:1.4rem 1.5rem 3rem}
   #s-title,#s-quiz,#s-result{max-width:1180px}
   .title-slide{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);align-items:center;text-align:left;gap:2rem;padding:2.1rem 2.4rem}
+  body.title-screen #s-title{max-width:1360px}
+  body.title-screen .title-slide{grid-template-columns:minmax(0,1fr) minmax(360px,.8fr);gap:1.4rem;padding:1.55rem 2rem;align-items:center}
   .title-slide::after{content:'○ ×';font-family:'Dela Gothic One',sans-serif;font-size:clamp(6rem,12vw,12rem);line-height:.8;color:rgba(255,255,255,.08);text-align:right}
+  body.title-screen .title-slide::after{font-size:clamp(5rem,10vw,9rem)}
   .title-deco,.info-cards{justify-content:flex-start;margin-left:0}
   .q-card{padding:1.6rem 2rem}
   .q-text{font-size:clamp(1.25rem,2vw,1.7rem)}
@@ -1636,6 +1667,7 @@ function savePDF(){
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  document.body.classList.toggle('title-screen', id==='s-title');
   document.body.classList.toggle('quiz-screen', id==='s-quiz');
   document.body.classList.toggle('intro-screen', id==='s-intro');
   if(id!=='s-quiz') document.body.classList.remove('answer-screen');
@@ -1644,6 +1676,7 @@ function showScreen(id){
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 initTitle();
+document.body.classList.add('title-screen');
 syncDisplay({phase:'title'});
 
 // ── Display同期 ──────────────────────────────────
