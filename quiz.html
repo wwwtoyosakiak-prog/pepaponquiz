@@ -311,6 +311,29 @@ footer{text-align:center;padding:1.5rem 1rem;font-size:11px;color:var(--bm);bord
 .intro-start-quiz-btn{background:var(--bd);color:var(--cream);font-family:'Dela Gothic One',sans-serif;font-size:1rem;letter-spacing:.04em;padding:.8rem 2.5rem;border:none;border-radius:7px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.3);transition:all .15s}
 .intro-start-quiz-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.3)}
 
+body.intro-screen header{display:none}
+body.intro-screen main{max-width:none;padding:.7rem 1rem 5rem}
+body.intro-screen #s-intro{width:min(1400px,calc(100vw - 2rem));height:calc(100vh - 6.3rem);min-height:0;margin:0 auto;display:flex;flex-direction:column}
+body.intro-screen .intro-header{padding:.65rem 1.1rem .35rem;flex-shrink:0}
+body.intro-screen #intro-slides-container{flex:1;min-height:0;overflow:hidden}
+body.intro-screen .intro-slide.active{height:100%;display:flex;flex-direction:column}
+body.intro-screen .intro-content{height:100%;display:flex;flex-direction:column;padding:.65rem 1.1rem .45rem;min-height:0}
+body.intro-screen .intro-cat-badge{margin-bottom:.45rem}
+body.intro-screen .intro-title{font-size:clamp(1.7rem,4vw,3rem);margin-bottom:.65rem}
+body.intro-screen .intro-body{flex:1;min-height:0;overflow:hidden;padding:.75rem;margin-bottom:.55rem}
+body.intro-screen .intro-lead{font-size:clamp(14px,1.6vw,18px);line-height:1.55;margin-bottom:.65rem}
+body.intro-screen .intro-image-grid{gap:.55rem;margin-bottom:.65rem}
+body.intro-screen .intro-photo img{height:clamp(76px,12vh,112px)}
+body.intro-screen .intro-photo figcaption{font-size:11px;padding:.35rem .5rem}
+body.intro-screen .intro-callout{font-size:clamp(14px,1.6vw,18px);line-height:1.45;padding:.55rem .75rem;margin-bottom:.65rem}
+body.intro-screen .intro-points{gap:.55rem;margin-bottom:.55rem}
+body.intro-screen .intro-point{padding:.6rem .7rem}
+body.intro-screen .intro-point-icon{font-size:1.1rem;margin-bottom:.2rem}
+body.intro-screen .intro-point-title{font-size:13px;margin-bottom:.18rem}
+body.intro-screen .intro-point-text{font-size:12px;line-height:1.45}
+body.intro-screen .intro-nav{padding:.4rem 1.1rem .65rem;flex-shrink:0}
+body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
+
 .intro-loading{text-align:center;padding:3rem 1.5rem;color:rgba(247,240,230,.6)}
 .intro-loading-icon{font-size:2rem;margin-bottom:.75rem;animation:spin 1s linear infinite;display:inline-block}
 .intro-loading-text{font-size:14px;line-height:1.8}
@@ -1581,6 +1604,7 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.body.classList.toggle('quiz-screen', id==='s-quiz');
+  document.body.classList.toggle('intro-screen', id==='s-intro');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
