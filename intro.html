@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ペパポンとは？ | PEPAPON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ブランドカラー（ヘッダー・ボタン） */
+  --bd:#4A2E10;        /* ダークブラウン - ヘッダー背景 */
+  --bm:#7A5230;        /* ミディアムブラウン */
+  --bl:#C4976A;        /* ライトブラウン - アクセント */
+
+  /* 背景・ボーダー */
+  --cream:#FDFAF6;     /* ほぼ白 - メイン背景 */
+  --bg-sub:#F5F0E8;    /* 薄クリーム - カード背景 */
+  --cd:#E2D5C0;        /* ボーダー */
+
+  /* テキスト */
+  --tp:#1A1A1A;        /* ほぼ黒 - メインテキスト */
+  --ts:#5A4A38;        /* ダークブラウン - サブテキスト */
+
+  /* 機能カラー（互いにはっきり区別） */
+  --green:#2B7A0B;     /* 正解・SDGs緑 */
+  --gp:#E8F5E0;        /* 緑背景 */
+  --teal:#0A6E50;      /* ティール - 福祉 */
+  --tl:#E0F4EE;        /* ティール背景 */
+  --coral:#C94020;     /* 不正解・警告 赤橙 */
+  --corl:#FDECEA;      /* 赤背景 */
+  --al:#FEF3E2;        /* アンバー背景 */
+  --amber:#B06A00;     /* アンバー */
+
+  /* 〇✕専用（コントラスト重視） */
+  --mc:#C94020;        /* 〇 = 赤橙（目立つ） */
+  --mbg:#FDECEA;
+  --bc:#2B7A0B;        /* ✕ = 緑（対比が明確） */
+  --bbg:#E8F5E0;
+
+  /* カテゴリ別バッジカラー */
+  --cat-basic-bg:#EEF3FF; --cat-basic-fg:#2850A0;   /* ペパポン基本: 青 */
+  --cat-sdgs-bg:#E8F5E0;  --cat-sdgs-fg:#1E6600;    /* SDGs・環境: 緑 */
+  --cat-recycle-bg:#E0F4EE;--cat-recycle-fg:#0A6E50;/* リサイクル: ティール */
+  --cat-welfare-bg:#F3E8FF;--cat-welfare-fg:#6B21A8; /* 福祉: 紫 */
+  --cat-product-bg:#FEF3E2;--cat-product-fg:#B06A00; /* 製品: アンバー */
+  --cat-service-bg:#FFE8E8;--cat-service-fg:#B91C1C; /* サービス: 赤 */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--cream);color:var(--tp);min-height:100vh;overflow-x:hidden;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(139,94,60,.04) 3px,rgba(139,94,60,.04) 4px),
+  repeating-linear-gradient(90deg,transparent,transparent 8px,rgba(139,94,60,.03) 8px,rgba(139,94,60,.03) 9px)}
+
+/* ── HEADER ── */
+header{background:var(--bd);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 11px);pointer-events:none}
+.h-inner{max-width:800px;margin:0 auto;padding:1.5rem 1.5rem 1.2rem;text-align:center;position:relative}
+.h-label{display:inline-block;background:var(--green);color:#C0DD97;font-size:11px;font-weight:700;letter-spacing:.15em;padding:3px 12px;border-radius:2px;margin-bottom:.5rem;text-transform:uppercase}
+.h-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);color:var(--cream);line-height:1.15}
+.h-title span{color:var(--bl)}
+.h-sub{color:rgba(247,240,230,.6);font-size:12px;margin-top:.3rem}
+.strip{height:8px;background:repeating-linear-gradient(90deg,var(--bm) 0,var(--bm) 18px,var(--bl) 18px,var(--bl) 20px);opacity:.6}
+
+
+/* ── グローバルナビ ── */
+.g-nav{background:rgba(0,0,0,.2);padding:.45rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;position:relative;z-index:10}
+.g-nav-links{display:flex;gap:.4rem;flex-wrap:wrap}
+.g-nav-link{color:rgba(247,240,230,.65);font-size:12px;font-weight:700;text-decoration:none;padding:4px 11px;border-radius:4px;border:1px solid rgba(196,151,106,.2);transition:all .15s;white-space:nowrap}
+.g-nav-link:hover{background:rgba(255,255,255,.1);color:var(--cream)}
+.g-nav-link.current{background:rgba(196,151,106,.2);color:var(--bl);border-color:rgba(196,151,106,.4)}
+.g-nav-label{font-size:11px;color:rgba(247,240,230,.4)}
+
+/* ── SLIDE CONTAINER ── */
+main{max-width:760px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+.slide{display:none;animation:fadeUp .35s ease}
+.slide.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PROGRESS ── */
+.progress-dots{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.75rem}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--cd);transition:all .2s}
+.dot.active{background:var(--bm);transform:scale(1.2)}
+.dot.done{background:var(--bl)}
+
+/* ── SLIDE CARDS ── */
+.slide-card{background:#fff;border:1px solid #D8CCB8;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.08);margin-bottom:1.25rem}
+.slide-hero{background:var(--bd);padding:2rem 2rem 1.75rem;position:relative;overflow:hidden;text-align:center}
+.slide-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.025) 12px,rgba(255,255,255,.025) 13px)}
+.slide-hero-icon{font-size:clamp(2.5rem,7vw,4rem);margin-bottom:.6rem;position:relative;z-index:1}
+.slide-hero-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);color:var(--cream);line-height:1.2;position:relative;z-index:1}
+.slide-hero-title span{color:var(--bl)}
+.slide-hero-sub{color:rgba(247,240,230,.65);font-size:13px;margin-top:.4rem;position:relative;z-index:1}
+
+.slide-body{padding:1.75rem 2rem}
+@media(max-width:480px){.slide-body{padding:1.25rem 1.25rem}}
+
+/* テキストブロック */
+.lead{font-size:clamp(14px,2vw,16px);line-height:1.9;color:var(--tp);margin-bottom:1.25rem}
+.lead strong{color:var(--bd);font-weight:700}
+
+/* スライド内画像 */
+.slide-image-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin:0 0 1.25rem}
+.slide-photo{background:var(--cream);border:1.5px solid var(--cd);border-radius:8px;overflow:hidden;box-shadow:0 3px 12px rgba(74,46,16,.08)}
+.slide-photo img{display:block;width:100%;height:130px;object-fit:cover;background:#fff}
+.slide-photo.contain img{object-fit:contain;padding:.65rem;background:#fff}
+.slide-photo figcaption{font-size:12px;font-weight:700;color:var(--bd);line-height:1.45;padding:.65rem .75rem;text-align:center}
+.hero-inline-img{height:150px;max-width:220px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 8px 18px rgba(0,0,0,.2))}
+
+/* ポイントカード */
+.point-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem;margin-bottom:1.25rem}
+.point-card{background:var(--cream);border-radius:7px;padding:1rem 1.1rem;border-left:4px solid var(--bm)}
+.point-card.green{border-left-color:var(--green)}
+.point-card.teal{border-left-color:var(--teal)}
+.point-card.coral{border-left-color:var(--coral)}
+.point-icon{font-size:1.4rem;margin-bottom:.4rem}
+.point-title{font-size:13px;font-weight:700;color:var(--bd);margin-bottom:.3rem}
+.point-text{font-size:12px;color:var(--ts);line-height:1.7}
+
+/* 製品グリッド */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.product-card{background:var(--cream);border-radius:7px;padding:.9rem .85rem;text-align:center;border:1.5px solid var(--cd)}
+.product-card-icon{font-size:1.8rem;margin-bottom:.4rem}
+.product-card-name{font-size:13px;font-weight:700;color:var(--bd);margin-bottom:.2rem}
+.product-card-desc{font-size:11px;color:var(--ts);line-height:1.6}
+
+/* SDGsバッジ */
+.sdgs-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.sdgs-badge{border-radius:7px;padding:.75rem 1rem;flex:1;min-width:180px}
+.sdgs-badge.s8{background:#E8F5E9;border:2px solid #4CAF50}
+.sdgs-badge.s12{background:#E3F2FD;border:2px solid #2196F3}
+.sdgs-badge-num{font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;margin-bottom:.2rem}
+.sdgs-badge.s8 .sdgs-badge-num{color:#2E7D32}
+.sdgs-badge.s12 .sdgs-badge-num{color:#1565C0}
+.sdgs-badge-title{font-size:13px;font-weight:700;margin-bottom:.25rem}
+.sdgs-badge.s8 .sdgs-badge-title{color:#2E7D32}
+.sdgs-badge.s12 .sdgs-badge-title{color:#1565C0}
+.sdgs-badge-text{font-size:12px;color:var(--ts);line-height:1.6}
+
+/* 活用事例 */
+.case-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.25rem}
+.case-item{display:flex;align-items:flex-start;gap:.75rem;background:var(--cream);border-radius:6px;padding:.75rem 1rem}
+.case-icon{font-size:1.4rem;flex-shrink:0}
+.case-text-wrap{}
+.case-title{font-size:13px;font-weight:700;color:var(--bd);margin-bottom:.15rem}
+.case-desc{font-size:12px;color:var(--ts);line-height:1.65}
+
+/* クイズへの橋渡し */
+.bridge-box{background:var(--al);border:2px solid var(--bl);border-radius:8px;padding:1.25rem 1.5rem;text-align:center;margin-bottom:1.25rem}
+.bridge-text{font-size:14px;color:var(--ts);line-height:1.8;margin-bottom:.75rem}
+.bridge-text strong{color:var(--bd)}
+.quiz-start-btn{display:inline-block;background:var(--bd);color:var(--cream);font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;letter-spacing:.06em;padding:.9rem 3rem;border:none;border-radius:7px;cursor:pointer;box-shadow:0 4px 0 rgba(92,58,30,.4);text-decoration:none;transition:all .15s}
+.quiz-start-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(92,58,30,.4)}
+.quiz-start-btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(92,58,30,.4)}
+
+/* ナビボタン */
+.nav-area{display:flex;justify-content:space-between;align-items:center;gap:.75rem}
+.nav-btn{font-family:'Dela Gothic One',sans-serif;font-size:.9rem;padding:.7rem 1.5rem;border-radius:6px;cursor:pointer;transition:all .1s;border:none;white-space:nowrap}
+.btn-next{background:var(--bd);color:var(--cream);box-shadow:2px 2px 0 var(--bm)}
+.btn-next:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--bm)}
+.btn-prev{background:transparent;color:var(--bm);border:1.5px solid var(--bm)!important;border:none}
+.btn-prev:hover{background:var(--al)}
+.slide-counter{font-size:12px;color:var(--ts);font-weight:700}
+
+footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--bm);border-top:1px solid var(--cd)}
+
+@media(min-width:900px){
+  .h-inner{max-width:1280px;text-align:left;padding:1rem 1.5rem}
+  main{max-width:1280px;padding:1.4rem 1.5rem 3rem}
+  .progress-dots{justify-content:flex-start;margin-bottom:1rem}
+  .slide-card{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.45fr);align-items:stretch;min-height:560px}
+  .slide-hero{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:2rem}
+  .slide-hero-icon{font-size:clamp(3.5rem,6vw,6rem)}
+  .slide-hero-title{font-size:clamp(2rem,4vw,3.5rem)}
+  .slide-body{padding:1.5rem 1.8rem;overflow:auto}
+  .lead{font-size:clamp(16px,1.5vw,21px)}
+  .slide-image-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .slide-photo img{height:150px}
+  .point-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .product-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .case-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nav-area{max-width:1280px;margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <span class="h-label">WHAT IS PEPAPON?</span>
+    <h1 class="h-title">ペパポンって<span>なに？</span></h1>
+    <p class="h-sub">クイズの前にペパポンについて学ぼう！</p>
+  </div>
+  <div class="strip"></div>
+<div class="g-nav">
+  <div class="g-nav-links">
+    <a href="top.html" class="g-nav-link">🏠 トップ</a>  <span class="g-nav-link current">📖 紹介</span>  <a href="index.html" class="g-nav-link">🎮 クイズ</a>  <a href="display.html" target="_blank" class="g-nav-link">📺 表示画面</a>  <a href="admin.html" class="g-nav-link">⚙ 管理</a>  <a href="help.html" class="g-nav-link">❓ 使い方</a>
+  </div>
+  
+</div>
+</header>
+
+
+<main>
+  <div class="progress-dots" id="dots"></div>
+
+  <div class="slide active" id="slide-0">
+    <div class="slide-card">
+      <div class="slide-hero">
+        <div class="slide-hero-icon">📦</div>
+        <h2 class="slide-hero-title">ペパポンって<span>なに？</span></h2>
+        <p class="slide-hero-sub">Cardboard capsule toy system.</p>
+      </div>
+      <div class="slide-body">
+        <p class="lead"><strong>ペパポン</strong>は、ガチャガチャ本体からカプセルまで<strong>すべてダンボールで作られた</strong>ガチャガチャです。「紙がポンッ！」—ダンボール製にしてからは、ガチャケースを持ち帰る人が増えました。</p>
+        <div class="slide-image-grid" aria-label="ペパポンの特徴画像">
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_front_card.jpg" alt="ペパポンのダンボールカプセル"><figcaption>ダンボール製カプセル</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_open_pair_card.jpg" alt="開いたペパポンカプセル"><figcaption>中まで紙でできた構造</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_two_closed_card.jpg" alt="ペパポンカプセルを並べた様子"><figcaption>手に取りやすい紙ケース</figcaption></figure>
+        </div>
+        <div class="point-grid">
+          <div class="point-card"><div class="point-icon">♻️</div><div class="point-title">丸ごとリサイクル可能</div><div class="point-text">本体もカプセルも壊れても丸ごとリサイクル。ダンボールはほぼ100%リサイクル可能な包装材です。</div></div>
+          <div class="point-card green"><div class="point-icon">🌍</div><div class="point-title">地球にやさしい素材</div><div class="point-text">プラスチックごみ問題への取り組みとして環境に優しいダンボールを使用。回収率95%・古紙利用率ほぼ100%。</div></div>
+          <div class="point-card teal"><div class="point-icon">🤝</div><div class="point-title">福祉にもつながる</div><div class="point-text">カプセルの組み立ては障がいのある方に依頼。購入が工賃・福祉施設収益の支援につながります。</div></div>
+        </div>
+        <p class="lead" style="font-size:13px;color:var(--ts)">意匠登録済み（第1614978号）。蓋が開けやすいスタンダードタイプで一般ガチャ本体でも詰まりにくい設計です。</p>
+      </div>
+    </div>
+    <div class="nav-area">
+      <span></span>
+      <span class="slide-counter">1 / 5</span>
+      <button class="nav-btn btn-next" onclick="nextSlide()">次へ →</button>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <div class="slide-card">
+      <div class="slide-hero">
+        <div class="slide-hero-icon">🎰</div>
+        <h2 class="slide-hero-title">製品<span>ラインナップ</span></h2>
+        <p class="slide-hero-sub">種類豊富なガチャ本体とカプセル</p>
+      </div>
+      <div class="slide-body">
+        <p class="lead">ペパポンには<strong>4種類のガチャ本体</strong>と、多彩なカプセルラインナップが揃っています。</p>
+        <div class="slide-image-grid" aria-label="製品ラインナップ画像">
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_logo_card.jpg" alt="PEPAPONロゴ入りカプセル"><figcaption>ロゴ入りカプセル</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_open_pair_card.jpg" alt="開いたカプセルと閉じたカプセル"><figcaption>開閉できる紙カプセル</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_single_card.jpg" alt="ペパポンカプセル単体"><figcaption>ころんとした立体形状</figcaption></figure>
+        </div>
+        <div class="product-grid">
+          <div class="product-card"><div class="product-card-icon">🏗️</div><div class="product-card-name">オリジナル</div><div class="product-card-desc">明和電機と共同開発。高さ91cm。カプセルを投入した順に排出。可燃ごみに出せるエコネジ採用。</div></div>
+          <div class="product-card"><div class="product-card-icon">📦</div><div class="product-card-name">ボックス</div><div class="product-card-desc">街で見かけるガチャ本体をダンボールで再現。高さ46cm。大容量でカプセルがランダム排出。</div></div>
+          <div class="product-card"><div class="product-card-icon">🏯</div><div class="product-card-name">シャチホコ</div><div class="product-card-desc">高さ140cmの大迫力ガチャ。24cmカプセルを3個セット可能。イベントで圧倒的に目立つ！</div></div>
+          <div class="product-card"><div class="product-card-icon">🐊</div><div class="product-card-name">ワニッ歯（パ）</div><div class="product-card-desc">歯科衛生士とコラボ。乳歯20本付きの歯型模型モデル。歯みがき学習にも最適。</div></div>
+        </div>
+        <p class="lead" style="margin-bottom:.6rem">カプセルのサイズは<strong>ミドル（φ6.5cm）</strong>・<strong>宅配用（φ24cm）</strong>・<strong>贈答用（14×14.5×19.5cm）</strong>の3種類。カラーは金・銀・赤・白の受注生産も。</p>
+        <div class="point-card" style="background:var(--cream);border-left-color:var(--bm);margin-bottom:.75rem">
+          <div class="point-icon">🔧</div>
+          <div class="point-title">オリジナルミニの組み立て方</div>
+          <div class="point-text">用意するものはセロハンテープと輪ゴム2つだけ。パーツを組み立てると輪ゴムの反発でカプセルが飛び出す！小さいお子様でも組み立てられるキットです。</div>
+        </div>
+        <div class="point-grid">
+          <div class="point-card coral"><div class="point-icon">🦗</div><div class="point-title">コオロギガチャ</div><div class="point-text">食用コオロギ（ジャマイカン・ヨーロッパイエ）のSDGs商品。ピザ・カレー・ソース・ガーリック味など。</div></div>
+          <div class="point-card green"><div class="point-icon">🌱</div><div class="point-title">たねポン</div><div class="point-text">カプセルをプランターに。有機種子で水だけで約1週間栽培。自由研究用紙付き。</div></div>
+          <div class="point-card teal"><div class="point-icon">🍵</div><div class="point-title">お茶ガチャ</div><div class="point-text">熱湯を注ぐと色んな形の昆布が出てくる粉末茶。おみくじ昆布シリーズ（大吉・小吉・凶・大凶）も。</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-area">
+      <button class="nav-btn btn-prev" onclick="prevSlide()">← 前へ</button>
+      <span class="slide-counter">2 / 5</span>
+      <button class="nav-btn btn-next" onclick="nextSlide()">次へ →</button>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-2">
+    <div class="slide-card">
+      <div class="slide-hero" style="background:#1a4a2e;padding-bottom:0;display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap">
+        <div style="text-align:center;position:relative;z-index:1">
+          <div class="slide-hero-icon">🌱</div>
+          <h2 class="slide-hero-title" style="color:#C0DD97">SDGsへの<span style="color:#fff">取り組み</span></h2>
+          <p class="slide-hero-sub">地球にやさしくオモシロく</p>
+        </div>
+        <img class="hero-inline-img" src="slide_assets/pepapon_photo_single_square.jpg" alt="ペパポンのダンボールカプセル">
+      </div>
+      <div class="slide-body">
+        <p class="lead"><strong>SDGs（持続可能な開発目標）</strong>とは、誰ひとり取り残されることなく人類が安定してこの地球で暮らし続けられるよう、世界のさまざまな問題を解決に向けて具体的な目標を示したものです。</p>
+        <div class="slide-image-grid" aria-label="SDGsの取り組み画像">
+          <figure class="slide-photo"><img src="recycle_items.jpg" alt="分別リサイクル"><figcaption>分別とリサイクル</figcaption></figure>
+          <figure class="slide-photo"><img src="gomibako.jpg" alt="ゴミ箱のイメージ"><figcaption>ごみ問題を考える</figcaption></figure>
+          <figure class="slide-photo"><img src="newspaper_fire.jpg" alt="紙資源のイメージ"><figcaption>紙資源の循環</figcaption></figure>
+        </div>
+        <div class="sdgs-row">
+          <div class="sdgs-badge s8">
+            <div class="sdgs-badge-num">SDGs 目標8</div>
+            <div class="sdgs-badge-title">🤝 働きがいも経済成長も</div>
+            <div class="sdgs-badge-text">福祉作業所と共に障がい者支援に取り組みます。カプセル組み立て作業を依頼し、仕事をつくる。誰でも参加できる組立工具も開発。企業→ペパポン→福祉作業所の経済循環を目指す。</div>
+          </div>
+          <div class="sdgs-badge s12">
+            <div class="sdgs-badge-num">SDGs 目標12</div>
+            <div class="sdgs-badge-title">♻️ つくる責任 つかう責任</div>
+            <div class="sdgs-badge-text">リサイクル率ほぼ100%のダンボール素材を採用。回収率95%・古紙利用率ほぼ100%・土に還る素材。リサイクル時も高温溶解など環境負荷の大きい工程がない。</div>
+          </div>
+        </div>
+        <div class="point-card" style="background:var(--gp);border-left-color:var(--green)">
+          <div class="point-icon">📊</div>
+          <div class="point-title">日本の障がい者の数</div>
+          <div class="point-text">約<strong>9,647,000人</strong>（国民の約7.6%）。身体障がい者436万人・知的障がい者109.4万人・精神障がい者419.3万人。ペパポンはこの方々の働く場づくりを支援しています。</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-area">
+      <button class="nav-btn btn-prev" onclick="prevSlide()">← 前へ</button>
+      <span class="slide-counter">3 / 5</span>
+      <button class="nav-btn btn-next" onclick="nextSlide()">次へ →</button>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-3">
+    <div class="slide-card">
+      <div class="slide-hero" style="background:#0F4C3A;padding-bottom:0;display:flex;align-items:flex-end;justify-content:center;gap:2rem;flex-wrap:wrap">
+        <div style="text-align:center;position:relative;z-index:1;padding-bottom:1.5rem">
+          <div class="slide-hero-icon">🏥</div>
+          <h2 class="slide-hero-title" style="color:#B2DFDB">活用<span style="color:#fff">シーン</span></h2>
+          <p class="slide-hero-sub">さまざまな場所で使われています</p>
+        </div>
+        <img class="hero-inline-img" src="slide_assets/pepapon_photo_two_closed_square.jpg" alt="ペパポンカプセルを並べた様子">
+      </div>
+      <div class="slide-body">
+        <p class="lead">ペパポンはガチャ・ワークショップ・イベント・福祉作業所など<strong>さまざまな場面</strong>で活躍しています。</p>
+        <div class="slide-image-grid" aria-label="活用シーン画像">
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_two_closed_card.jpg" alt="ペパポンカプセルを並べた様子"><figcaption>イベントで並べて見せやすい</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_open_pair_card.jpg" alt="開いたペパポンカプセル"><figcaption>中身を見せる体験にも使える</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_logo_card.jpg" alt="PEPAPONロゴ入りカプセル"><figcaption>ブランド感のある紙カプセル</figcaption></figure>
+        </div>
+        <div class="case-list">
+          <div class="case-item"><div class="case-icon">🦷</div><div class="case-text-wrap"><div class="case-title">歯科医院・クリニック</div><div class="case-desc">待合室の集客に。歯科衛生士とコラボした「ワニッ歯（パ）」は内覧会でも大活躍。歯みがき学習にも最適。</div></div></div>
+          <div class="case-item"><div class="case-icon">🎪</div><div class="case-text-wrap"><div class="case-title">イベント・ショールーム・展示会</div><div class="case-desc">ガチャが目を引き集客に成功。地域まつりでは1日190回ガチャの実績で売上に貢献。オリジナルサイドパネルでカスタマイズも。</div></div></div>
+          <div class="case-item"><div class="case-icon">🏫</div><div class="case-text-wrap"><div class="case-title">教育機関・自治体</div><div class="case-desc">社会・図工・理科の学びを提案。ものづくり体験・リサイクル学習・自由研究・地産地消で町おこしプランを出張提案。</div></div></div>
+          <div class="case-item"><div class="case-icon">🔬</div><div class="case-text-wrap"><div class="case-title">博物館・水族館</div><div class="case-desc">川崎水族館ではコオロギガチャ・たねポンを設置。たねポンは自由研究コーナーで人気商品に。</div></div></div>
+          <div class="case-item"><div class="case-icon">🏥</div><div class="case-text-wrap"><div class="case-title">障害者施設がガチャで収益を上げる</div><div class="case-desc">施設前にガチャを設置して収益を上げる施設も登場。施設主催の地域祭りでカプセル組み立て工作の体験を実施する施設も。ペパポン製品を通して障がいのある方々の自立を応援。</div></div></div>
+          <div class="case-item"><div class="case-icon">🏢</div><div class="case-text-wrap"><div class="case-title">企業コラボ・オリジナル商品開発</div><div class="case-desc">明和電機・MNH（食用コオロギ）・グリーンフィールドプロジェクト（有機種子）・丸松茶舗（お茶）など多数のコラボ実績。</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-area">
+      <button class="nav-btn btn-prev" onclick="prevSlide()">← 前へ</button>
+      <span class="slide-counter">4 / 5</span>
+      <button class="nav-btn btn-next" onclick="nextSlide()">次へ →</button>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-4">
+    <div class="slide-card">
+      <div class="slide-hero">
+        <div class="slide-hero-icon">🎯</div>
+        <h2 class="slide-hero-title">さあ、<span>クイズに挑戦！</span></h2>
+        <p class="slide-hero-sub">ペパポンのことをどれだけ覚えた？</p>
+      </div>
+      <div class="slide-body">
+        <p class="lead">ここまでペパポンについて学んできました。まとめると…</p>
+        <div class="slide-image-grid" aria-label="まとめ画像">
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_front_card.jpg" alt="ペパポンのダンボールカプセル"><figcaption>すべてダンボール製</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_open_pair_card.jpg" alt="開いたペパポンカプセル"><figcaption>中まで紙素材</figcaption></figure>
+          <figure class="slide-photo"><img src="slide_assets/pepapon_photo_two_closed_card.jpg" alt="ペパポンカプセルを並べた様子"><figcaption>会場で使いやすい</figcaption></figure>
+        </div>
+        <div class="point-grid">
+          <div class="point-card">
+            <div class="point-icon">📦</div>
+            <div class="point-title">ガチャ本体からカプセルまですべてダンボール製</div>
+            <div class="point-text">プラスチックごみ問題への取り組みとして環境に優しいダンボールを使用。ほぼ100%リサイクル可能。</div>
+          </div>
+          <div class="point-card green">
+            <div class="point-icon">🌱</div>
+            <div class="point-title">SDGs8・12に貢献</div>
+            <div class="point-text">障がい者支援（目標8）と環境配慮（目標12）の2つに取り組む。</div>
+          </div>
+          <div class="point-card teal">
+            <div class="point-icon">💰</div>
+            <div class="point-title">売上が障害者施設の収益に</div>
+            <div class="point-text">カプセル組み立ては障害者施設の方々が担当。売上の一部が施設収益・工賃に繋がる。</div>
+          </div>
+          <div class="point-card coral">
+            <div class="point-icon">🏥</div>
+            <div class="point-title">施設がガチャで自立支援</div>
+            <div class="point-text">施設前にガチャを設置したり、お祭り・イベントで収益を上げる施設も登場。障がいのある方々の自立を応援。</div>
+          </div>
+        </div>
+        <div class="bridge-box">
+          <p class="bridge-text">
+            クイズは今見た<strong>ペパポンの内容</strong>から出題されます。<br>
+            全問正解を目指そう！
+          </p>
+          <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+            <a href="index.html" class="quiz-start-btn">🎮 クイズスタート！</a>
+            <a href="admin.html" style="display:inline-block;background:rgba(92,58,30,.15);color:var(--bd);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;letter-spacing:.04em;padding:.8rem 1.75rem;border:2px solid var(--bl);border-radius:7px;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(92,58,30,.25)'" onmouseout="this.style.background='rgba(92,58,30,.15)'">⚙ 管理ページへ</a>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:12px;color:var(--ts);margin-top:.75rem">
+          詳しくは <a href="https://pepapon.com/" target="_blank" rel="noopener" style="color:var(--teal);font-weight:700">pepapon.com</a> をご覧ください
+        </p>
+      </div>
+    </div>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+            <a href="index.html" class="quiz-start-btn">🎮 クイズスタート！</a>
+            <a href="admin.html" style="display:inline-block;background:rgba(92,58,30,.15);color:var(--bd);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;letter-spacing:.04em;padding:.8rem 1.75rem;border:2px solid var(--bl);border-radius:7px;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(92,58,30,.25)'" onmouseout="this.style.background='rgba(92,58,30,.15)'">⚙ 管理ページへ</a>
+          </div>
+    <div class="nav-area">
+      <button class="nav-btn btn-prev" onclick="prevSlide()">← 前へ</button>
+      <span class="slide-counter">5 / 5</span>
+      <span></span>
+    </div>
+  </div>
+
+
+<script>
+const TOTAL = 5;
+let current = 0;
+
+function buildDots(){
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  for(let i=0;i<TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===current?' active':i<current?' done':'');
+    d.onclick=()=>goTo(i);
+    d.style.cursor='pointer';
+    dots.appendChild(d);
+  }
+}
+
+function goTo(idx){
+  document.getElementById('slide-'+current).classList.remove('active');
+  current=idx;
+  document.getElementById('slide-'+current).classList.add('active');
+  buildDots();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextSlide(){ if(current<TOTAL-1) goTo(current+1); }
+function prevSlide(){ if(current>0) goTo(current-1); }
+
+// キーボード操作
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') nextSlide();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevSlide();
+});
+
+buildDots();
+</script>
+
+<!-- フローティングヘルプボタン -->
+<a href="help.html" target="_blank" id="help-float" title="使い方ガイド" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:var(--bd);color:var(--cream);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;text-decoration:none;box-shadow:0 3px 10px rgba(92,58,30,.35);transition:all .2s;border:2px solid var(--bl)" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">❓</a>
+
+<!-- ヘルプボタン -->
+<a href="help.html" title="使い方ガイドを開く" style="position:fixed;bottom:1.5rem;right:1.5rem;width:48px;height:48px;border-radius:50%;background:var(--bd);color:var(--cream);font-family:'Dela Gothic One',sans-serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 3px 12px rgba(92,58,30,.35);z-index:990;transition:all .15s;border:2px solid var(--bl)" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 5px 16px rgba(92,58,30,.45)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 3px 12px rgba(92,58,30,.35)'">?</a>
+
+</body>
+</html>

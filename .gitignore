@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+.env
+.env.*
+node_modules/
+dist/
+build/
+outputs/
+work/
+slide_assets/contact_sheet.jpg
+slide_assets/processed_contact.jpg
+slide_assets/src_*
+test.html

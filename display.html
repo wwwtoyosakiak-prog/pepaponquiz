@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ペパポン クイズ | 表示画面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ブランドカラー（ヘッダー・ボタン） */
+  --bd:#4A2E10;        /* ダークブラウン - ヘッダー背景 */
+  --bm:#7A5230;        /* ミディアムブラウン */
+  --bl:#C4976A;        /* ライトブラウン - アクセント */
+
+  /* 背景・ボーダー */
+  --cream:#FDFAF6;     /* ほぼ白 - メイン背景 */
+  --bg-sub:#F5F0E8;    /* 薄クリーム - カード背景 */
+  --cd:#E2D5C0;        /* ボーダー */
+
+  /* テキスト */
+  --tp:#1A1A1A;        /* ほぼ黒 - メインテキスト */
+  --ts:#5A4A38;        /* ダークブラウン - サブテキスト */
+
+  /* 機能カラー（互いにはっきり区別） */
+  --green:#2B7A0B;     /* 正解・SDGs緑 */
+  --gp:#E8F5E0;        /* 緑背景 */
+  --teal:#0A6E50;      /* ティール - 福祉 */
+  --tl:#E0F4EE;        /* ティール背景 */
+  --coral:#C94020;     /* 不正解・警告 赤橙 */
+  --corl:#FDECEA;      /* 赤背景 */
+  --al:#FEF3E2;        /* アンバー背景 */
+  --amber:#B06A00;     /* アンバー */
+
+  /* 〇✕専用（コントラスト重視） */
+  --mc:#C94020;        /* 〇 = 赤橙（目立つ） */
+  --mbg:#FDECEA;
+  --bc:#2B7A0B;        /* ✕ = 緑（対比が明確） */
+  --bbg:#E8F5E0;
+
+  /* カテゴリ別バッジカラー */
+  --cat-basic-bg:#EEF3FF; --cat-basic-fg:#2850A0;   /* ペパポン基本: 青 */
+  --cat-sdgs-bg:#E8F5E0;  --cat-sdgs-fg:#1E6600;    /* SDGs・環境: 緑 */
+  --cat-recycle-bg:#E0F4EE;--cat-recycle-fg:#0A6E50;/* リサイクル: ティール */
+  --cat-welfare-bg:#F3E8FF;--cat-welfare-fg:#6B21A8; /* 福祉: 紫 */
+  --cat-product-bg:#FEF3E2;--cat-product-fg:#B06A00; /* 製品: アンバー */
+  --cat-service-bg:#FFE8E8;--cat-service-fg:#B91C1C; /* サービス: 赤 */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--bd);
+  color:var(--cream);
+  display:flex;flex-direction:column;
+  background-image:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.015) 40px,rgba(255,255,255,.015) 41px);
+}
+
+/* ── ヘッダー ── */
+.d-header{
+  background:rgba(0,0,0,.25);
+  padding:.6rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.d-logo{font-family:'Dela Gothic One',sans-serif;font-size:1.1rem;color:var(--bl);letter-spacing:.05em}
+.d-progress{display:flex;align-items:center;gap:1rem}
+.d-prog-label{font-size:.9rem;color:rgba(247,240,230,.6);font-weight:700}
+.d-prog-track{width:200px;height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+.d-prog-fill{height:100%;background:var(--bl);border-radius:4px;transition:width .6s ease}
+.d-score{font-family:'Dela Gothic One',sans-serif;font-size:1rem;color:var(--bl)}
+
+/* ── メインエリア ── */
+.d-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 4rem;position:relative;overflow:hidden}
+
+/* ── TITLE PHASE ── */
+.phase{display:none;width:100%;max-width:1000px;text-align:center;animation:fadeUp .5s ease}
+.phase.active{display:flex;flex-direction:column;align-items:center;justify-content:center}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.title-logo{font-family:'Dela Gothic One',sans-serif;font-size:clamp(3rem,8vw,7rem);color:var(--cream);line-height:1.1;margin-bottom:.5rem}
+.title-logo span{color:var(--bl)}
+.title-sub{font-size:clamp(.9rem,2vw,1.4rem);color:rgba(247,240,230,.6);margin-bottom:2rem}
+.title-chips{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.title-chip{background:rgba(255,255,255,.08);border:1px solid rgba(196,151,106,.3);color:var(--bl);font-size:clamp(.75rem,1.5vw,1rem);font-weight:700;padding:.4rem 1.2rem;border-radius:20px}
+
+/* ── QUESTION PHASE ── */
+.q-cat-badge{font-size:clamp(.75rem,1.5vw,1rem);font-weight:700;padding:.4rem 1.2rem;border-radius:4px;margin-bottom:1.2rem;display:inline-block}
+.q-bonus-badge{background:var(--al);color:#BA7517;font-size:clamp(.75rem,1.4vw,.95rem);font-weight:700;padding:.35rem 1.1rem;border-radius:4px;margin-bottom:.75rem;display:none}
+.q-bonus-badge.show{display:inline-block}
+.q-text-big{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.6rem,4vw,3.4rem);color:#fff;line-height:1.5;text-align:center;margin-bottom:2rem;max-width:900px}
+.ox-display{display:grid;grid-template-columns:1fr 1fr;gap:2rem;width:100%;max-width:700px}
+.ox-box{border:3px solid rgba(255,255,255,.15);border-radius:16px;padding:2rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.75rem;transition:all .4s ease}
+.ox-box.waiting-maru{border-color:rgba(216,90,48,.3)}
+.ox-box.waiting-batsu{border-color:rgba(59,109,17,.3)}
+.ox-big{font-family:'Dela Gothic One',sans-serif;font-size:clamp(4rem,10vw,8rem);line-height:1}
+.ox-box.waiting-maru .ox-big{color:rgba(216,90,48,.5)}
+.ox-box.waiting-batsu .ox-big{color:rgba(59,109,17,.5)}
+.ox-label{font-size:clamp(.85rem,1.8vw,1.2rem);color:rgba(247,240,230,.5);font-weight:700;letter-spacing:.1em}
+.ox-count{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.5rem,3.5vw,3rem);color:rgba(247,240,230,.3)}
+
+/* ── ANSWER PHASE ── */
+.ox-box.correct{border-width:4px;box-shadow:0 0 40px rgba(255,255,255,.2)}
+.ox-box.correct-maru{border-color:#FF6B45;background:rgba(255,107,69,.18);}
+.ox-box.correct-maru .ox-big{color:#FF6B45}
+.ox-box.correct-maru .ox-label{color:rgba(255,107,69,.9)}
+.ox-box.correct-maru .ox-count{color:var(--mc)}
+.ox-box.correct-batsu{border-color:var(--bc);background:rgba(59,109,17,.15)}
+.ox-box.correct-batsu .ox-big{color:#5cb85c}
+.ox-box.correct-batsu .ox-label{color:rgba(59,109,17,.8)}
+.ox-box.correct-batsu .ox-count{color:#5cb85c}
+.ox-box.wrong-box{opacity:.35;border-color:rgba(255,255,255,.08)}
+.ox-box.crowd-win::after{content:'みんなの答え';font-size:.75rem;font-weight:700;background:rgba(255,255,255,.9);color:var(--bd);padding:3px 10px;border-radius:3px;margin-top:.25rem}
+
+.answer-reveal{text-align:center;margin-top:1.5rem;animation:popIn .4s cubic-bezier(.17,.67,.41,1.3)}
+.answer-correct-label{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1rem,2.5vw,1.8rem);margin-bottom:.4rem}
+.answer-correct-label.ok{color:#6fcf6f}
+.answer-correct-label.ng{color:#e07070}
+.answer-correct-label.tie{color:var(--bl)}
+.answer-explain{font-size:clamp(.75rem,1.6vw,1.1rem);color:rgba(247,240,230,.7);line-height:1.8;max-width:800px;margin:0 auto}
+
+/* バーグラフ */
+.bar-area{width:100%;max-width:700px;margin-top:1.25rem}
+.bar-row{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem}
+.bar-sym{font-family:'Dela Gothic One',sans-serif;font-size:1.6rem;min-width:40px;text-align:center}
+.bar-sym.m{color:var(--mc)}.bar-sym.b{color:#5cb85c}
+.bar-bg{flex:1;height:44px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .8s ease;display:flex;align-items:center;padding-left:14px}
+.bar-fill.mf{background:linear-gradient(90deg,#C94020,#FF6B45)}.bar-fill.bf{background:linear-gradient(90deg,#1A5C08,#3D9B16)}
+.bar-num{font-family:'Dela Gothic One',sans-serif;font-size:1rem;color:#fff;white-space:nowrap}
+.bar-num-out{font-family:'Dela Gothic One',sans-serif;font-size:.9rem;color:rgba(247,240,230,.6);white-space:nowrap}
+
+/* ── RESULT PHASE ── */
+.result-rank-big{font-family:'Dela Gothic One',sans-serif;font-size:clamp(3rem,10vw,8rem);line-height:1;filter:drop-shadow(0 4px 20px rgba(0,0,0,.4));margin-bottom:.25rem}
+.result-label{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.2rem,3vw,2.5rem);color:var(--bl);margin-bottom:1rem}
+.result-score-huge{font-family:'Dela Gothic One',sans-serif;font-size:clamp(2.5rem,7vw,6rem);color:#fff;line-height:1}
+.result-score-sub{font-size:clamp(.8rem,1.8vw,1.2rem);color:rgba(247,240,230,.55);margin-top:.35rem;margin-bottom:1.5rem}
+.result-bar-wrap{width:100%;max-width:500px;height:14px;background:rgba(255,255,255,.15);border-radius:7px;overflow:hidden;margin-bottom:1.5rem}
+.result-bar-fill{height:100%;background:var(--bl);border-radius:7px;transition:width 1.2s ease;width:0%}
+.result-msg{font-size:clamp(.85rem,1.8vw,1.2rem);color:rgba(247,240,230,.65);line-height:1.8;max-width:700px}
+
+/* ── 紙吹雪 ── */
+.conf-wrap{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
+.conf{position:absolute;width:10px;height:10px;border-radius:2px;animation:confFall linear forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+
+/* ── intro phase ── */
+.d-intro-badge{display:inline-block;font-size:clamp(.7rem,1.4vw,.9rem);font-weight:700;padding:.35rem 1.1rem;border-radius:3px;margin-bottom:1rem;letter-spacing:.12em;text-transform:uppercase}
+.d-intro-title{font-family:'Dela Gothic One',sans-serif;font-size:clamp(1.8rem,5vw,4rem);color:var(--cream);line-height:1.2;margin-bottom:1.5rem;text-align:center}
+.d-intro-title span{color:var(--bl)}
+.d-intro-body{background:#FFF7EB;border-radius:12px;padding:1.35rem 1.6rem;max-width:1120px;width:min(94vw,1120px);border:2px solid rgba(255,255,255,.72);overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.16)}
+.d-intro-lead{font-size:clamp(1.1rem,2vw,1.55rem);color:#241306;line-height:1.85;margin-bottom:1.15rem;text-shadow:none;font-weight:700}
+.d-intro-lead strong{color:#7A3A00}
+.d-intro-lead,.d-intro-point-title,.d-intro-point-text{overflow-wrap:anywhere}
+.d-intro-body img{display:block;max-width:100%!important;height:auto}
+.d-intro-image-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem;margin:0 0 1.1rem}
+.d-intro-photo{background:#FFFFFF;border:1.5px solid rgba(196,151,106,.45);border-radius:8px;overflow:hidden;box-shadow:0 3px 12px rgba(74,46,16,.1)}
+.d-intro-photo img{display:block;width:100%;height:clamp(120px,14vw,165px);object-fit:cover;background:#fff}
+.d-intro-photo.contain img{object-fit:contain;padding:.6rem}
+.d-intro-photo figcaption{font-size:clamp(.75rem,1.1vw,.95rem);font-weight:900;color:#4A2E10;line-height:1.45;padding:.55rem .7rem;text-align:center}
+.d-intro-callout{background:#FBE8B8;border:2px solid #E8A020;border-radius:8px;color:#3A1E08;font-size:clamp(1.1rem,2vw,1.55rem);font-weight:900;line-height:1.6;padding:.9rem 1.1rem;margin:0 0 1.1rem;text-align:center}
+.d-intro-callout.green{background:#EAF4D7;border-color:#7BA63B}
+.d-intro-callout.teal{background:#DFF4ED;border-color:#0F6E56}
+.d-intro-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.9rem;margin:0 0 1.1rem}
+.d-intro-compare-col{background:#fff;border-radius:8px;border:1.5px solid rgba(196,151,106,.45);padding:1rem;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.d-intro-compare-title{font-size:clamp(1.05rem,1.7vw,1.35rem);font-weight:900;color:#2B1606;margin-bottom:.65rem;text-align:center}
+.d-intro-compare-list{font-size:clamp(.9rem,1.35vw,1.05rem);font-weight:800;color:#241306;line-height:1.8}
+.d-intro-points{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin-top:.65rem}
+.d-intro-point{background:#FFFFFF;border-radius:8px;padding:.85rem 1rem;border-left:5px solid #C4976A;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.d-intro-point-icon{font-size:1.8rem;margin-bottom:.45rem}
+.d-intro-point-title{font-size:clamp(1rem,1.7vw,1.25rem);font-weight:900;color:#2B1606;margin-bottom:.35rem}
+.d-intro-point-text{font-size:clamp(.9rem,1.35vw,1.05rem);color:#241306;line-height:1.6;font-weight:700}
+.d-intro-prog{display:flex;gap:.5rem;margin-top:1.5rem;justify-content:center}
+.d-intro-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .25s}
+.d-intro-dot.active{background:var(--bl);transform:scale(1.3)}
+.d-intro-dot.done{background:rgba(196,151,106,.5)}
+.d-intro-loading{text-align:center;color:rgba(247,240,230,.6)}
+.d-intro-loading-icon{font-size:3rem;margin-bottom:1rem;animation:spin 1s linear infinite;display:inline-block}
+.d-intro-loading-text{font-size:clamp(1rem,2vw,1.3rem);line-height:1.8}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── フッター ── */
+.d-footer{background:rgba(0,0,0,.2);padding:.4rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.d-footer-brand{font-size:.75rem;color:rgba(247,240,230,.35)}
+.d-status{font-size:.75rem;color:rgba(247,240,230,.3)}
+
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+
+@media(min-width:1000px){
+  .d-main{padding:1.5rem 4vw}
+  .phase{max-width:1280px}
+  .q-text-big{max-width:1180px;font-size:clamp(2rem,4.3vw,4.2rem)}
+  .ox-display{max-width:960px;gap:2.5rem}
+  .bar-area{max-width:960px}
+  .answer-explain{max-width:1100px;font-size:clamp(1rem,1.7vw,1.35rem)}
+  .d-intro-body{max-width:1240px;width:min(96vw,1240px)}
+  .d-intro-points{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .result-msg{max-width:980px}
+}
+</style>
+</head>
+<body>
+
+<div style="background:rgba(0,0,0,.3);padding:.3rem 1.5rem;display:flex;align-items:center;gap:.75rem;font-size:11px;flex-shrink:0">
+  <span style="color:rgba(247,240,230,.35)">📺 プロジェクター表示画面</span>
+  <span style="color:rgba(247,240,230,.2)">|</span>
+  <a href="index.html" style="color:rgba(196,151,106,.7);text-decoration:none;font-weight:700">← 司会者画面に戻る</a>
+  <a href="top.html" style="color:rgba(247,240,230,.4);text-decoration:none;margin-left:auto">🏠 トップ</a>
+</div>
+<div class="d-header">
+  <div class="d-logo">📦 PEPAPON QUIZ</div>
+  <div class="d-progress">
+    <span class="d-prog-label" id="d-qlabel"></span>
+    <div class="d-prog-track"><div class="d-prog-fill" id="d-prog" style="width:0%"></div></div>
+    <span class="d-score" id="d-score"></span>
+  </div>
+</div>
+
+<div class="d-main">
+
+  <!-- INTRO LOADING -->
+  <div class="phase" id="phase-intro-loading">
+    <div class="d-intro-loading">
+      <div class="d-intro-loading-icon">⏳</div>
+      <div class="d-intro-loading-text">AIが問題を分析して<br>紹介スライドを準備しています...</div>
+    </div>
+  </div>
+
+  <!-- INTRO SLIDE -->
+  <div class="phase" id="phase-intro">
+    <span class="d-intro-badge" id="d-intro-badge"></span>
+    <h2 class="d-intro-title" id="d-intro-title"></h2>
+    <div class="d-intro-body" id="d-intro-body"></div>
+    <div class="d-intro-prog" id="d-intro-prog"></div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="phase active" id="phase-title">
+    <div class="title-logo">PEPAPON<br><span>○×クイズ</span></div>
+    <div class="title-sub">ダンボール製ガチャガチャ「ペパポン」に関するクイズ</div>
+    <div class="title-chips">
+      <span class="title-chip">📦 ダンボール</span>
+      <span class="title-chip">🌱 SDGs</span>
+      <span class="title-chip">🤝 福祉</span>
+    </div>
+  </div>
+
+  <!-- QUESTION -->
+  <div class="phase" id="phase-question">
+    <span class="q-bonus-badge" id="d-bonus">🎁 サービス問題！全員正解のチャンス</span>
+    <span class="q-cat-badge" id="d-cat"></span>
+    <p class="q-text-big" id="d-qtext"></p>
+    <div class="ox-display">
+      <div class="ox-box waiting-maru" id="d-box-maru">
+        <div class="ox-big">〇</div>
+        <div class="ox-label">まる</div>
+        <div class="ox-count" id="d-cnt-maru">—</div>
+      </div>
+      <div class="ox-box waiting-batsu" id="d-box-batsu">
+        <div class="ox-big">✕</div>
+        <div class="ox-label">ばつ</div>
+        <div class="ox-count" id="d-cnt-batsu">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANSWER -->
+  <div class="phase" id="phase-answer">
+    <p class="q-text-big" id="d-atext" style="font-size:clamp(1.1rem,2.5vw,2rem);margin-bottom:1.25rem"></p>
+    <div class="ox-display" style="max-width:600px">
+      <div class="ox-box" id="d-abox-maru">
+        <div class="ox-big">〇</div>
+        <div class="ox-label">まる</div>
+        <div class="ox-count" id="d-acnt-maru">0人</div>
+      </div>
+      <div class="ox-box" id="d-abox-batsu">
+        <div class="ox-big">✕</div>
+        <div class="ox-label">ばつ</div>
+        <div class="ox-count" id="d-acnt-batsu">0人</div>
+      </div>
+    </div>
+    <div class="bar-area" id="d-bar-area"></div>
+    <div class="answer-reveal" id="d-answer-reveal">
+      <p class="answer-correct-label" id="d-crowd-label"></p>
+      <p class="answer-explain" id="d-explain"></p>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="phase" id="phase-result">
+    <div class="result-rank-big" id="d-rank"></div>
+    <div class="result-label" id="d-rlabel"></div>
+    <div class="result-score-huge" id="d-rscore"></div>
+    <div class="result-score-sub" id="d-rsub"></div>
+    <div class="result-bar-wrap"><div class="result-bar-fill" id="d-rbar"></div></div>
+    <div class="result-msg" id="d-rmsg"></div>
+  </div>
+
+</div>
+
+<div class="conf-wrap" id="conf-wrap"></div>
+
+<div class="d-footer">
+  <span class="d-footer-brand">pepapon.com</span>
+  <span class="d-status" id="d-status">司会者画面と接続中...</span>
+</div>
+
+<script>
+const RANKS=[
+  {min:1.0,rank:'🥇',label:'ペパポンマスター！',msg:'満点！ペパポンのことを完璧に知っていますね。ダンボールの達人です！'},
+  {min:0.6,rank:'🥈',label:'ペパポン博士',      msg:'かなりの正解数！SDGsと福祉への取り組みをよく知っていますね。'},
+  {min:0.4,rank:'🥉',label:'ペパポン見習い',    msg:'まずまずの結果。ペパポン公式サイトで詳しく学んでみよう！'},
+  {min:0,  rank:'📦',label:'ダンボール初心者',  msg:'ペパポンはこれから！公式サイトでペパポンの魅力を発見してください。'},
+];
+const CAT_COLORS={
+  'ペパポン基本':{bg:'var(--cat-basic-bg)',fg:'var(--cat-basic-fg)'},'SDGs・環境':{bg:'var(--cat-sdgs-bg)',fg:'var(--cat-sdgs-fg)'},
+  '福祉・社会貢献':{bg:'var(--cat-welfare-bg)',fg:'var(--cat-welfare-fg)'},'製品・ラインナップ':{bg:'var(--cat-product-bg)',fg:'var(--cat-product-fg)'},
+  'サービス問題':{bg:'var(--cat-service-bg)',fg:'var(--cat-service-fg)'},
+};
+const CONF_COLORS=['#D85A30','#3B6D11','#BA7517','#C4976A','#0F6E56','#fff'];
+
+let lastTs=0, currentScore=0, currentTotal=0;
+let scoredAnswerKeys = new Set();
+
+function showPhase(id){
+  document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el){ el.classList.remove('active'); void el.offsetWidth; el.classList.add('active'); }
+}
+
+function applyState(state){
+  if(!state||state.ts<=lastTs) return;
+  lastTs=state.ts;
+  document.getElementById('d-status').textContent='最終更新: '+new Date(state.ts).toLocaleTimeString('ja-JP');
+
+  if(state.phase==='title'){
+    showPhase('phase-title');
+    currentScore=0;
+    currentTotal=0;
+    scoredAnswerKeys.clear();
+    document.getElementById('d-qlabel').textContent='';
+    document.getElementById('d-prog').style.width='0%';
+    document.getElementById('d-score').textContent='';
+  }
+
+  else if(state.phase==='intro-loading'){
+    showPhase('phase-intro-loading');
+    document.getElementById('d-qlabel').textContent='紹介スライド準備中';
+    document.getElementById('d-prog').style.width='0%';
+    document.getElementById('d-score').textContent='';
+  }
+
+  else if(state.phase==='intro'){
+    showPhase('phase-intro');
+    document.getElementById('d-qlabel').textContent=`紹介 ${state.slideIndex+1} / ${state.slideTotal}`;
+    document.getElementById('d-prog').style.width=`${((state.slideIndex)/(state.slideTotal))*100}%`;
+    document.getElementById('d-score').textContent='';
+
+    const badge = document.getElementById('d-intro-badge');
+    badge.textContent = state.slideCatBadge||'';
+    badge.style.color = state.slideCatColor||'var(--bl)';
+    badge.style.background = state.slideCatBg||'rgba(196,151,106,.2)';
+
+    document.getElementById('d-intro-title').innerHTML = state.slideTitle||'';
+
+    // contentからdisplay用にHTMLを変換（intro-point→d-intro-point）
+    let html = (state.slideContent||'')
+      .replace(/intro-lead/g,'d-intro-lead')
+      .replace(/intro-image-grid/g,'d-intro-image-grid')
+      .replace(/intro-photo/g,'d-intro-photo')
+      .replace(/intro-callout/g,'d-intro-callout')
+      .replace(/intro-compare-col/g,'d-intro-compare-col')
+      .replace(/intro-compare-title/g,'d-intro-compare-title')
+      .replace(/intro-compare-list/g,'d-intro-compare-list')
+      .replace(/intro-compare/g,'d-intro-compare')
+      .replace(/intro-points/g,'d-intro-points')
+      .replace(/intro-point-icon/g,'d-intro-point-icon')
+      .replace(/intro-point-title/g,'d-intro-point-title')
+      .replace(/intro-point-text/g,'d-intro-point-text')
+      .replace(/class="intro-point/g,'class="d-intro-point')
+      .replace(/intro-quiz-preview[^"]*"/g,'"' )
+      .replace(/intro-link-badge[^"]*"/g,'"');
+    document.getElementById('d-intro-body').innerHTML = html;
+
+    // ドット
+    const dotsEl = document.getElementById('d-intro-prog');
+    dotsEl.innerHTML='';
+    for(let i=0;i<state.slideTotal;i++){
+      const d=document.createElement('span');
+      d.className='d-intro-dot'+(i===state.slideIndex?' active':i<state.slideIndex?' done':'');
+      dotsEl.appendChild(d);
+    }
+  }
+
+    else if(state.phase==='question'){
+    showPhase('phase-question');
+    currentTotal=state.qTotal;
+    if(state.qNum===1){
+      currentScore=0;
+      scoredAnswerKeys.clear();
+      document.getElementById('d-score').textContent='';
+    }
+    document.getElementById('d-qlabel').textContent=`問${state.qNum} / ${state.qTotal}`;
+    document.getElementById('d-prog').style.width=`${((state.qNum-1)/state.qTotal)*100}%`;
+
+    const cc=CAT_COLORS[state.cat]||{bg:'#FAEEDA',fg:'#8B5E3C'};
+    const badge=document.getElementById('d-cat');
+    badge.textContent=state.cat; badge.style.background=cc.bg; badge.style.color=cc.fg;
+    document.getElementById('d-qtext').textContent=state.text;
+    document.getElementById('d-bonus').className='q-bonus-badge'+(state.isBonus?' show':'');
+
+    // 箱リセット
+    document.getElementById('d-box-maru').className='ox-box waiting-maru';
+    document.getElementById('d-box-batsu').className='ox-box waiting-batsu';
+    document.getElementById('d-cnt-maru').textContent='—';
+    document.getElementById('d-cnt-batsu').textContent='—';
+  }
+
+  else if(state.phase==='answer'){
+    showPhase('phase-answer');
+    document.getElementById('d-qlabel').textContent=`問${state.qNum} / ${state.qTotal}`;
+    document.getElementById('d-prog').style.width=`${(state.qNum/state.qTotal)*100}%`;
+    document.getElementById('d-atext').textContent=state.text;
+
+    const m=state.maru||0, b=state.batsu||0, t=m+b;
+    document.getElementById('d-acnt-maru').textContent=m+'人';
+    document.getElementById('d-acnt-batsu').textContent=b+'人';
+
+    const marBox=document.getElementById('d-abox-maru');
+    const batBox=document.getElementById('d-abox-batsu');
+    marBox.className='ox-box'; batBox.className='ox-box';
+
+    const correctIsMaru=state.answer===true;
+    if(correctIsMaru){ marBox.classList.add('correct','correct-maru'); batBox.classList.add('wrong-box'); }
+    else              { batBox.classList.add('correct','correct-batsu'); marBox.classList.add('wrong-box'); }
+
+    if(state.crowdAnswer==='maru') marBox.classList.add('crowd-win');
+    else if(state.crowdAnswer==='batsu') batBox.classList.add('crowd-win');
+
+    // バーグラフ
+    const pm=t>0?Math.round((m/t)*100):0, pb=100-pm;
+    const showIM=pm>=22, showIB=pb>=22;
+    document.getElementById('d-bar-area').innerHTML=t===0?'':`
+      <div class="bar-row">
+        <span class="bar-sym m">〇</span>
+        <div class="bar-bg"><div class="bar-fill mf" style="width:0%" data-w="${pm}">
+          <span class="bar-num">${showIM?m+'人 ('+pm+'%)':''}</span>
+        </div></div>
+        <span class="bar-num-out">${!showIM&&m>0?m+'人 ('+pm+'%)':''}</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-sym b">✕</span>
+        <div class="bar-bg"><div class="bar-fill bf" style="width:0%" data-w="${pb}">
+          <span class="bar-num">${showIB?b+'人 ('+pb+'%)':''}</span>
+        </div></div>
+        <span class="bar-num-out">${!showIB&&b>0?b+'人 ('+pb+'%)':''}</span>
+      </div>`;
+    setTimeout(()=>{
+      document.querySelectorAll('[data-w]').forEach(el=>{ el.style.width=el.dataset.w+'%'; });
+    },100);
+
+    // みんなの答え
+    const crowdLabel=document.getElementById('d-crowd-label');
+    if(state.crowdAnswer==='tie'){ crowdLabel.textContent='〇と✕が同数でした'; crowdLabel.className='answer-correct-label tie'; }
+    else{
+      const cs=state.crowdAnswer==='maru'?'〇':'✕';
+      if(state.crowdCorrect){
+        crowdLabel.textContent=`🎉 みんなの答え「${cs}」は正解！`;
+        crowdLabel.className='answer-correct-label ok';
+        const answerKey=`${state.qNum}/${state.qTotal}`;
+        const firstScored=!scoredAnswerKeys.has(answerKey);
+        scoredAnswerKeys.add(answerKey);
+        if(typeof state.score === 'number') currentScore=state.score;
+        else if(firstScored) currentScore=(currentScore||0)+1;
+        document.getElementById('d-score').textContent=`${currentScore}点`;
+        if(firstScored) fireConfetti();
+      }
+      else { crowdLabel.textContent=`みんなの答え「${cs}」は不正解…`; crowdLabel.className='answer-correct-label ng'; }
+    }
+    document.getElementById('d-explain').textContent=state.explain||'';
+  }
+
+  else if(state.phase==='result'){
+    currentScore=state.score; currentTotal=state.total;
+    const pct=state.pct/100;
+    const rank=RANKS.find(r=>pct>=r.min)||RANKS[RANKS.length-1];
+    document.getElementById('d-rank').textContent=rank.rank;
+    document.getElementById('d-rlabel').textContent=rank.label;
+    document.getElementById('d-rscore').textContent=`${state.score} / ${state.total}`;
+    document.getElementById('d-rsub').textContent=`正答率 ${state.pct}%`;
+    document.getElementById('d-rmsg').textContent=rank.msg;
+    document.getElementById('d-qlabel').textContent='結果発表';
+    document.getElementById('d-prog').style.width='100%';
+    document.getElementById('d-score').textContent=`${state.score}点`;
+    showPhase('phase-result');
+    setTimeout(()=>{ document.getElementById('d-rbar').style.width=`${state.pct}%`; },200);
+    if(pct>=1) fireConfetti();
+  }
+}
+
+function fireConfetti(){
+  const wrap=document.getElementById('conf-wrap'); wrap.innerHTML='';
+  for(let i=0;i<80;i++){
+    const el=document.createElement('div'); el.className='conf';
+    el.style.left=Math.random()*100+'vw';
+    el.style.background=CONF_COLORS[Math.floor(Math.random()*CONF_COLORS.length)];
+    el.style.width=(Math.random()*10+5)+'px'; el.style.height=(Math.random()*10+5)+'px';
+    el.style.animationDuration=(Math.random()*2+1)+'s';
+    el.style.animationDelay=(Math.random()*.6)+'s';
+    wrap.appendChild(el);
+  }
+  setTimeout(()=>wrap.innerHTML='',3500);
+}
+
+// polling（localStorage経由で同期）
+function poll(){
+  try{
+    const raw=localStorage.getItem('pepapon_display');
+    if(raw){ const st=JSON.parse(raw); applyState(st); }
+  }catch(e){}
+}
+
+setInterval(poll,300);
+poll();
+</script>
+
+<!-- フローティングヘルプボタン -->
+<a href="help.html" target="_blank" id="help-float" title="使い方ガイド" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:var(--bd);color:var(--cream);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;text-decoration:none;box-shadow:0 3px 10px rgba(92,58,30,.35);transition:all .2s;border:2px solid var(--bl)" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">❓</a>
+
+<!-- ヘルプボタン -->
+<a href="help.html" title="使い方ガイドを開く" style="position:fixed;bottom:1.5rem;right:1.5rem;width:48px;height:48px;border-radius:50%;background:var(--bd);color:var(--cream);font-family:'Dela Gothic One',sans-serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 3px 12px rgba(92,58,30,.35);z-index:990;transition:all .15s;border:2px solid var(--bl)" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 5px 16px rgba(92,58,30,.45)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 3px 12px rgba(92,58,30,.35)'">?</a>
+
+</body>
+</html>
