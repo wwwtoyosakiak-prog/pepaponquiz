@@ -134,7 +134,7 @@ footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--bm);border-to
   <div class="g-nav-links">
     <a class="g-nav-link" href="top.html">🏠 トップ</a>
     <a class="g-nav-link" href="intro.html">📖 紹介</a>
-    <a class="g-nav-link" href="index.html">🎮 クイズ</a>
+    <a class="g-nav-link" href="quiz.html">🎮 クイズ</a>
     <a class="g-nav-link" href="display.html" target="_blank">📺 表示画面</a>
     <a class="g-nav-link" href="admin.html">⚙ 管理</a>
     <span class="g-nav-link current">❓ 使い方</span>
@@ -166,7 +166,7 @@ footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--bm);border-to
     <div class="flow-h-step"><div class="flow-h-icon">👥</div><div class="flow-h-title">④クイズ進行</div><div class="flow-h-desc">人数入力・答え合わせ</div></div>
     <div class="flow-h-step"><div class="flow-h-icon">📊</div><div class="flow-h-title">⑤結果確認</div><div class="flow-h-desc">管理ページで印刷</div></div>
   </div>
-  <div class="note"><strong>イベント当日のおすすめ：</strong> 管理ページで問題・設定を確認 → プロジェクターにdisplay.htmlを開く → 司会者PCでindex.htmlを開く → スタートボタンを押す</div>
+  <div class="note"><strong>イベント当日のおすすめ：</strong> 管理ページで問題・設定を確認 → プロジェクターにdisplay.htmlを開く → 司会者PCでquiz.htmlを開く → スタートボタンを押す</div>
 </section>
 
 <section class="sec" id="admin-help">
@@ -200,7 +200,7 @@ footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--bm);border-to
 </section>
 
 <section class="sec" id="quiz-help">
-  <h2 class="sec-title">🎮 クイズ（司会者画面） <span class="page-badge" style="background:var(--al);color:var(--bd)">index.html</span></h2>
+  <h2 class="sec-title">🎮 クイズ（司会者画面） <span class="page-badge" style="background:var(--al);color:var(--bd)">quiz.html</span></h2>
   <div class="steps">
     <div class="step"><div class="step-num">1</div><div><div class="step-title">スタートボタンを押す</div><div class="step-desc">タイトル画面の「🎮 スタート！」を押すとAIが問題を分析し、<strong>関連する紹介スライドショーが自動表示</strong>されます。スライド後に自動でクイズが始まります。</div></div></div>
     <div class="step"><div class="step-num">2</div><div><div class="step-title">問題を読み上げる</div><div class="step-desc">問題文を参加者に読み上げます。display.htmlにも同じ問題が表示されています。参加者に〇か✕かを考えてもらいます。</div></div></div>
@@ -217,8 +217,8 @@ footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--bm);border-to
 <section class="sec" id="display-help">
   <h2 class="sec-title">📺 プロジェクター表示画面 <span class="page-badge" style="background:var(--tl);color:var(--teal)">display.html</span></h2>
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><div><div class="step-title">別タブで開く</div><div class="step-desc">クイズ画面（index.html）のナビバー「📺 表示画面」から新しいタブで開きます。このタブをプロジェクター接続画面に移動させてください。</div></div></div>
-    <div class="step"><div class="step-num">2</div><div><div class="step-title">2画面構成で使う</div><div class="step-desc">司会者PC：<strong>index.html</strong>（操作）、プロジェクター：<strong>display.html</strong>（投影）の2画面構成が基本です。どちらも<strong>同じPC・同じブラウザ</strong>で開いてください。</div></div></div>
+    <div class="step"><div class="step-num">1</div><div><div class="step-title">別タブで開く</div><div class="step-desc">クイズ画面（quiz.html）のナビバー「📺 表示画面」から新しいタブで開きます。このタブをプロジェクター接続画面に移動させてください。</div></div></div>
+    <div class="step"><div class="step-num">2</div><div><div class="step-title">2画面構成で使う</div><div class="step-desc">司会者PC：<strong>quiz.html</strong>（操作）、プロジェクター：<strong>display.html</strong>（投影）の2画面構成が基本です。どちらも<strong>同じPC・同じブラウザ</strong>で開いてください。</div></div></div>
   </div>
   <div class="tips">
     <div class="tip"><div class="tip-icon">⚡</div><div class="tip-title">自動同期（約0.3秒）</div><div class="tip-desc">localStorageを介して同期するため、同じPC上での使用が必要です。異なる端末間ではリアルタイム同期はできません。</div></div>
@@ -239,7 +239,7 @@ footer{text-align:center;padding:1.5rem;font-size:11px;color:var(--bm);border-to
   </div>
   <div class="faq" onclick="this.classList.toggle('open')">
     <div class="faq-q"><span class="faq-badge">Q</span>プロジェクターに表示が映りません<span class="faq-arrow">▼</span></div>
-    <div class="faq-a">display.htmlとindex.htmlは同じPC・同じブラウザで開く必要があります。同じPCの別タブで開いてから、display.htmlのタブをプロジェクター側に移動してください。</div>
+    <div class="faq-a">display.htmlとquiz.htmlは同じPC・同じブラウザで開く必要があります。同じPCの別タブで開いてから、display.htmlのタブをプロジェクター側に移動してください。</div>
   </div>
   <div class="faq" onclick="this.classList.toggle('open')">
     <div class="faq-q"><span class="faq-badge">Q</span>BGM・効果音が鳴りません<span class="faq-arrow">▼</span></div>
