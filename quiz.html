@@ -136,6 +136,13 @@ body.quiz-screen .vote-input-wrap{min-height:clamp(120px,26vh,170px);padding:.55
 body.quiz-screen .vote-sym{font-size:clamp(2rem,7vh,3rem)}
 body.quiz-screen .vote-num-input{font-size:1.55rem;padding:.35rem .35rem}
 body.quiz-screen .decide-btn{padding:.68rem;margin-top:.65rem!important}
+body.answer-screen .prog-wrap{margin-bottom:.8rem}
+body.answer-screen .q-card{display:none}
+body.answer-screen .fb{margin-bottom:.75rem;padding:1.05rem 1.2rem}
+body.answer-screen .fb-ex{line-height:1.55;margin-top:.45rem}
+body.answer-screen .result-chart{margin-top:.65rem;padding-top:.65rem}
+body.answer-screen .chart-bar-bg{height:26px}
+body.answer-screen .next-btn{padding:.75rem}
 
 /* ── FEEDBACK ── */
 .fb{background:#fff;border:1.5px solid #D8CCB8;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem;display:none;box-shadow:0 2px 12px rgba(0,0,0,.08)}
@@ -728,6 +735,7 @@ function launchQuiz(){
 
 /* ── 問題描画 ── */
 function renderQuestion(){
+  document.body.classList.remove('answer-screen');
   const q=gameQuestions[currentIndex];
   const total=gameQuestions.length;
   document.getElementById('q-label').textContent=`問${currentIndex+1} / ${total}`;
@@ -817,6 +825,10 @@ document.getElementById('decide-btn').onclick=function(){
     <div class="chart-footer">合計 ${t} 人</div>`;
   document.getElementById('fb').classList.add('show');
   document.getElementById('next-btn').classList.add('show');
+  document.body.classList.add('answer-screen');
+  requestAnimationFrame(()=>{
+    document.getElementById('fb').scrollIntoView({block:'center',behavior:'smooth'});
+  });
 
   // BGM・効果音
   if(bgmOn) stopBGM();
@@ -1605,6 +1617,7 @@ function showScreen(id){
   document.getElementById(id).classList.add('active');
   document.body.classList.toggle('quiz-screen', id==='s-quiz');
   document.body.classList.toggle('intro-screen', id==='s-intro');
+  if(id!=='s-quiz') document.body.classList.remove('answer-screen');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
