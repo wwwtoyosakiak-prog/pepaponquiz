@@ -124,25 +124,34 @@ main{max-width:1120px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
 
 body.quiz-screen header{display:none}
 body.quiz-screen main{min-height:calc(100vh - 5rem);padding:1rem 1.25rem 5rem;display:flex;align-items:center;justify-content:center}
-body.quiz-screen #s-quiz{width:min(960px,100%);max-width:960px}
-body.quiz-screen .prog-wrap{margin-bottom:.55rem}
-body.quiz-screen .q-card{padding:1rem 1.2rem;margin-bottom:.75rem}
-body.quiz-screen .q-badge{margin-bottom:.35rem}
-body.quiz-screen .q-text{line-height:1.55;margin-bottom:.65rem}
-body.quiz-screen .review-slide-btn{font-size:12px;padding:.42rem .75rem;margin-bottom:.7rem}
-body.quiz-screen .vote-grid{gap:.7rem}
-body.quiz-screen .vote-col{gap:.35rem}
-body.quiz-screen .vote-input-wrap{min-height:clamp(120px,26vh,170px);padding:.55rem .45rem .65rem;gap:.25rem}
-body.quiz-screen .vote-sym{font-size:clamp(2rem,7vh,3rem)}
-body.quiz-screen .vote-num-input{font-size:1.55rem;padding:.35rem .35rem}
-body.quiz-screen .decide-btn{padding:.68rem;margin-top:.65rem!important}
-body.answer-screen .prog-wrap{margin-bottom:.8rem}
+body.quiz-screen #s-quiz{width:min(1280px,100%);max-width:1280px}
+body.quiz-screen .prog-wrap{margin-bottom:.8rem}
+body.quiz-screen .prog-label{font-size:15px}
+body.quiz-screen .prog-track{height:11px}
+body.quiz-screen .q-card{padding:1.35rem 1.6rem;margin-bottom:.9rem}
+body.quiz-screen .q-badge{font-size:13px;margin-bottom:.5rem;padding:4px 12px}
+body.quiz-screen .q-text{font-size:clamp(1.35rem,2.3vw,2rem);line-height:1.55;margin-bottom:.9rem}
+body.quiz-screen .review-slide-btn{font-size:14px;padding:.55rem 1rem;margin-bottom:.9rem}
+body.quiz-screen .vote-grid{gap:1rem}
+body.quiz-screen .vote-col{gap:.45rem}
+body.quiz-screen .vote-input-wrap{min-height:clamp(180px,32vh,280px);padding:.8rem .7rem .9rem;gap:.35rem}
+body.quiz-screen .vote-sym{font-size:clamp(3.2rem,10vh,5.6rem)}
+body.quiz-screen .vote-num-input{max-width:190px;font-size:2.45rem;padding:.48rem .45rem}
+body.quiz-screen .vote-unit{font-size:16px}
+body.quiz-screen .decide-btn{font-size:1.18rem;padding:.9rem;margin-top:.9rem!important}
+body.answer-screen .prog-wrap{margin-bottom:1rem}
 body.answer-screen .q-card{display:none}
-body.answer-screen .fb{margin-bottom:.75rem;padding:1.05rem 1.2rem}
-body.answer-screen .fb-ex{line-height:1.55;margin-top:.45rem}
-body.answer-screen .result-chart{margin-top:.65rem;padding-top:.65rem}
-body.answer-screen .chart-bar-bg{height:26px}
-body.answer-screen .next-btn{padding:.75rem}
+body.answer-screen .fb{margin-bottom:1rem;padding:1.5rem 1.8rem}
+body.answer-screen .fb-res{font-size:1.45rem;margin-bottom:.6rem}
+body.answer-screen .fb-crowd-res{font-size:1rem;padding:.55rem .9rem}
+body.answer-screen .fb-ex{font-size:1.05rem;line-height:1.65;margin-top:.65rem}
+body.answer-screen .result-chart{margin-top:1rem;padding-top:1rem}
+body.answer-screen .chart-sym{font-size:1.8rem;min-width:42px}
+body.answer-screen .chart-bar-bg{height:42px}
+body.answer-screen .chart-num,
+body.answer-screen .chart-num-out,
+body.answer-screen .chart-footer{font-size:15px}
+body.answer-screen .next-btn{font-size:1.18rem;padding:1rem}
 
 /* ── FEEDBACK ── */
 .fb{background:#fff;border:1.5px solid #D8CCB8;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem;display:none;box-shadow:0 2px 12px rgba(0,0,0,.08)}
@@ -384,6 +393,17 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   .title-start-btn{width:100%;padding:.9rem 1rem}
   .vote-grid{gap:8px}
   .q-card,.fb{padding:1.1rem 1rem}
+  body.quiz-screen main{padding:.85rem .85rem 10rem}
+  body.quiz-screen .q-card{padding:1rem}
+  body.quiz-screen .q-text{font-size:clamp(1.08rem,5.4vw,1.35rem)}
+  body.quiz-screen .vote-grid{gap:.6rem}
+  body.quiz-screen .vote-input-wrap{min-height:clamp(130px,25vh,190px)}
+  body.quiz-screen .vote-sym{font-size:clamp(2.4rem,9vh,3.6rem)}
+  body.quiz-screen .vote-num-input{font-size:1.7rem;max-width:130px}
+  body.answer-screen .fb{padding:1rem}
+  body.answer-screen .fb-res{font-size:1.15rem}
+  body.answer-screen .fb-ex{font-size:.95rem}
+  body.answer-screen .chart-bar-bg{height:30px}
   .review-slide-btn{width:100%}
   .vote-num-input{font-size:1.55rem;max-width:100%}
   .r-stats{grid-template-columns:1fr}
