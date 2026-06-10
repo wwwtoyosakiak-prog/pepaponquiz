@@ -978,7 +978,8 @@ function addQuestion(){
 
 // ── 出題セット ──────────────────────────────────────────────
 function linkPriority(){
-  return settings.linkPriority || 'auto';
+  const el = document.getElementById('link-priority');
+  return el ? el.value : (settings.linkPriority || 'auto');
 }
 
 function linkRandom(){
@@ -1764,8 +1765,8 @@ async function initAdmin(){
   qPage=1;
   loadAll();
   await loadQuizSlidesForAdmin();
-  if(quizSet.length && !slideSet.length){ syncSlidesFromQuizSet(); saveAll(); }
   syncSettingsUI();
+  if(quizSet.length && !slideSet.length && shouldSyncSlidesFromQuiz()){ syncSlidesFromQuizSet(); saveAll(); }
   renderList();
   renderSet();
   renderResults();
