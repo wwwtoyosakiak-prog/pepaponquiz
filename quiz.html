@@ -123,8 +123,8 @@ main{max-width:1120px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
 .decide-btn:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
 
 body.quiz-screen header{display:none}
-body.quiz-screen main{padding-top:.85rem;padding-bottom:5rem}
-body.quiz-screen #s-quiz{max-width:960px}
+body.quiz-screen main{min-height:calc(100vh - 5rem);padding:1rem 1.25rem 5rem;display:flex;align-items:center;justify-content:center}
+body.quiz-screen #s-quiz{width:min(960px,100%);max-width:960px}
 body.quiz-screen .prog-wrap{margin-bottom:.55rem}
 body.quiz-screen .q-card{padding:1rem 1.2rem;margin-bottom:.75rem}
 body.quiz-screen .q-badge{margin-bottom:.35rem}
