@@ -93,15 +93,29 @@ body.title-screen .h-title{font-size:clamp(2rem,4.5vw,3rem)}
 body.title-screen .h-sub{margin-top:.15rem}
 body.title-screen main{max-width:none;padding:1rem 1.25rem 5rem}
 body.title-screen #s-title{width:min(1360px,100%);max-width:1360px}
-body.title-screen .title-slide{min-height:calc(100vh - 7.25rem);margin-bottom:0;padding:1.55rem 2rem}
-body.title-screen .title-slide-label{margin-bottom:.65rem}
-body.title-screen .title-slide-main{font-size:clamp(2.5rem,5.5vw,4.6rem);margin-bottom:.3rem}
-body.title-screen .title-slide-sub{font-size:clamp(14px,1.5vw,18px);line-height:1.65;margin-bottom:1.15rem}
-body.title-screen .title-deco{margin-bottom:1.25rem}
-body.title-screen .info-cards{margin-bottom:1.25rem}
-body.title-screen .info-card{padding:.75rem .65rem}
+body.title-screen .title-slide{min-height:calc(100vh - 7.25rem);margin-bottom:0;padding:2rem;display:grid;grid-template-columns:minmax(360px,.78fr) minmax(420px,1fr);align-items:center;gap:2.25rem;text-align:left}
+body.title-screen .title-slide::after{content:none}
+body.title-screen .title-panel-left,
+body.title-screen .title-panel-right{position:relative;z-index:1}
+body.title-screen .title-panel-left{display:flex;flex-direction:column;gap:1rem}
+body.title-screen .title-panel-right{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.3rem}
+body.title-screen .title-slide-label{width:100%;margin-bottom:0}
+body.title-screen .title-slide-main{font-size:clamp(3rem,6vw,5.4rem);margin-bottom:0;text-shadow:0 5px 0 rgba(0,0,0,.15)}
+body.title-screen .title-slide-sub{font-size:clamp(17px,1.8vw,24px);line-height:1.75;margin-bottom:0;font-weight:900;color:rgba(255,248,240,.9)}
+body.title-screen .title-deco{margin-bottom:0;justify-content:center}
+body.title-screen .info-cards{max-width:none;margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+body.title-screen .info-card{padding:1rem .9rem;border:1.5px solid rgba(196,151,106,.22)}
 body.title-screen .info-card-icon{font-size:1.25rem;margin-bottom:.2rem}
-body.title-screen .info-card-val{font-size:.95rem}
+body.title-screen .info-card-val{font-size:1rem}
+body.title-screen .title-start-btn{width:min(520px,100%);font-size:clamp(1.25rem,2.1vw,1.8rem);padding:1.05rem 2rem}
+body.title-screen .title-options{display:flex;flex-direction:column;align-items:flex-start;gap:.65rem}
+body.title-screen .title-sub-link{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12);color:var(--cream);font-size:13px;font-weight:700;padding:.55rem 1rem;border-radius:6px;text-decoration:none;border:1px solid rgba(196,151,106,.3)}
+body.title-screen .title-set-note{background:rgba(43,122,11,.25);border:1.5px solid rgba(43,122,11,.5);border-radius:6px;padding:.5rem .85rem;font-size:13px;font-weight:700;color:#A8E6A0}
+body.title-screen .title-timer{display:flex;align-items:center;gap:.5rem;font-size:13px;cursor:pointer;color:rgba(255,255,255,.9);font-weight:700;flex-wrap:wrap}
+body.title-screen .title-timer input{width:16px;height:16px;cursor:pointer}
+body.title-screen .title-timer select{padding:5px 8px;border-radius:5px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+body.title-screen .title-small-links{display:flex;gap:.9rem;flex-wrap:wrap}
+body.title-screen .title-small-links a{color:var(--bm);font-size:12px;text-decoration:none;border-bottom:1px dashed var(--bm);opacity:.75;padding-bottom:1px}
 
 /* ── QUIZ ── */
 .prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:1.1rem}
@@ -406,7 +420,9 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   body.title-screen main{padding:.85rem .85rem 10rem}
   body.title-screen .h-inner{padding:.75rem 1rem .65rem}
   body.title-screen .h-title{font-size:clamp(1.7rem,10vw,2.6rem)}
-  body.title-screen .title-slide{min-height:auto;padding:1.2rem .9rem}
+  body.title-screen .title-slide{min-height:auto;padding:1.2rem .9rem;display:grid;grid-template-columns:1fr;gap:1.1rem;text-align:center}
+  body.title-screen .title-panel-left,
+  body.title-screen .title-panel-right{align-items:stretch;text-align:center}
   body.title-screen .title-slide-main{font-size:clamp(2rem,11vw,3rem)}
   body.title-screen .title-slide-sub{font-size:13px;line-height:1.55;margin-bottom:.9rem}
   .title-deco{gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
@@ -418,6 +434,8 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   body.title-screen .info-card-icon{font-size:1.05rem;margin-bottom:.1rem}
   body.title-screen .info-card-label{font-size:10px}
   body.title-screen .info-card-val{font-size:.82rem}
+  body.title-screen .title-options{align-items:stretch}
+  body.title-screen .title-small-links{justify-content:center}
   .title-start-btn{width:100%;padding:.9rem 1rem}
   .vote-grid{gap:8px}
   .q-card,.fb{padding:1.1rem 1rem}
@@ -450,9 +468,9 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   #s-title,#s-quiz,#s-result{max-width:1180px}
   .title-slide{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);align-items:center;text-align:left;gap:2rem;padding:2.1rem 2.4rem}
   body.title-screen #s-title{max-width:1360px}
-  body.title-screen .title-slide{grid-template-columns:minmax(0,1fr) minmax(360px,.8fr);gap:1.4rem;padding:1.55rem 2rem;align-items:center}
+  body.title-screen .title-slide{grid-template-columns:minmax(360px,.78fr) minmax(420px,1fr);gap:2.25rem;padding:2rem;align-items:center}
   .title-slide::after{content:'○ ×';font-family:'Dela Gothic One',sans-serif;font-size:clamp(6rem,12vw,12rem);line-height:.8;color:rgba(255,255,255,.08);text-align:right}
-  body.title-screen .title-slide::after{font-size:clamp(5rem,10vw,9rem)}
+  body.title-screen .title-slide::after{content:none}
   .title-deco,.info-cards{justify-content:flex-start;margin-left:0}
   .q-card{padding:1.6rem 2rem}
   .q-text{font-size:clamp(1.25rem,2vw,1.7rem)}
@@ -490,44 +508,45 @@ body.intro-screen .intro-nav-btn{font-size:.78rem;padding:.48rem 1.1rem}
   <!-- TITLE SLIDE -->
   <section class="screen active" id="s-title">
     <div class="title-slide">
-      <div class="title-slide-label">PEPAPON QUIZ</div>
-      <h2 class="title-slide-main">ペパポン<br><span>○×クイズ</span></h2>
-      <p class="title-slide-sub">ダンボール製ガチャガチャ「ペパポン」に関する<br>○×クイズに挑戦しよう！</p>
-      <div class="title-deco">
-        <span class="deco-chip">📦 ダンボール</span>
-        <span class="deco-chip">🌱 SDGs</span>
-        <span class="deco-chip">🤝 福祉</span>
+      <div class="title-panel-left">
+        <div class="title-slide-label">PEPAPON QUIZ</div>
+        <p class="title-slide-sub">ダンボール製ガチャガチャ「ペパポン」に関する<br>○×クイズに挑戦しよう！</p>
+        <div class="info-cards" id="title-info-cards">
+          <div class="info-card"><div class="info-card-icon">❓</div><div class="info-card-label">出題数</div><div class="info-card-val" id="title-total">—</div></div>
+          <div class="info-card"><div class="info-card-icon">🎁</div><div class="info-card-label">最終問題</div><div class="info-card-val" id="title-bonus">—</div></div>
+          <div class="info-card"><div class="info-card-icon">🔀</div><div class="info-card-label">出題順</div><div class="info-card-val" id="title-order">—</div></div>
+          <div class="info-card"><div class="info-card-icon">🎯</div><div class="info-card-label">難易度</div><div class="info-card-val" id="title-diff" style="font-size:.85rem">—</div></div>
+        </div>
+        <div class="title-options">
+          <a href="intro.html" class="title-sub-link">📖 ペパポンの紹介を見る</a>
+          <div id="title-set-note" class="title-set-note" style="display:none">🎯 出題セットが設定されています</div>
+          <label class="title-timer">
+            <input type="checkbox" id="timer-enabled">
+            <span>⏱ タイマー</span>
+            <select id="timer-sec">
+              <option value="10">10秒</option>
+              <option value="15">15秒</option>
+              <option value="20">20秒</option>
+              <option value="30" selected>30秒</option>
+              <option value="45">45秒</option>
+              <option value="60">60秒</option>
+            </select>
+          </label>
+          <div class="title-small-links">
+            <a href="admin.html">⚙ 管理ページ</a>
+            <a href="https://pepapon.com/" target="_blank" rel="noopener">🌐 pepapon.com</a>
+          </div>
+        </div>
       </div>
-      <div class="info-cards" id="title-info-cards">
-        <div class="info-card"><div class="info-card-icon">❓</div><div class="info-card-label">出題数</div><div class="info-card-val" id="title-total">—</div></div>
-        <div class="info-card"><div class="info-card-icon">🎁</div><div class="info-card-label">最終問題</div><div class="info-card-val" id="title-bonus">—</div></div>
-        <div class="info-card"><div class="info-card-icon">🔀</div><div class="info-card-label">出題順</div><div class="info-card-val" id="title-order">—</div></div>
-        <div class="info-card"><div class="info-card-icon">🎯</div><div class="info-card-label">難易度</div><div class="info-card-val" id="title-diff" style="font-size:.85rem">—</div></div>
+      <div class="title-panel-right">
+        <h2 class="title-slide-main">ペパポン<br><span>○×クイズ</span></h2>
+        <div class="title-deco">
+          <span class="deco-chip">📦 ダンボール</span>
+          <span class="deco-chip">🌱 SDGs</span>
+          <span class="deco-chip">🤝 福祉</span>
+        </div>
+        <button class="title-start-btn" id="start-btn" onclick="startQuiz()">スタート！</button>
       </div>
-      <button class="title-start-btn" id="start-btn" onclick="startQuiz()">スタート！</button>
-    </div>
-    <div style="margin-bottom:1rem">
-      <a href="intro.html" style="display:inline-block;background:rgba(255,255,255,.12);color:var(--cream);font-size:13px;font-weight:700;padding:.5rem 1.25rem;border-radius:5px;text-decoration:none;border:1px solid rgba(196,151,106,.3);transition:all .15s" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">📖 ペパポンの紹介を見る</a>
-    </div>
-    <div id="title-set-note" style="display:none;background:rgba(43,122,11,.25);border:1.5px solid rgba(43,122,11,.5);border-radius:6px;padding:.5rem 1rem;text-align:center;font-size:13px;font-weight:700;color:#A8E6A0;margin-bottom:.75rem">🎯 出題セットが設定されています</div>
-    <!-- タイマー設定 -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.75rem;flex-wrap:wrap">
-      <label style="display:flex;align-items:center;gap:.4rem;font-size:13px;cursor:pointer;color:rgba(255,255,255,.9);font-weight:700">
-        <input type="checkbox" id="timer-enabled" style="width:16px;height:16px;cursor:pointer">
-        <span>⏱ タイマー</span>
-      </label>
-      <select id="timer-sec" style="padding:4px 8px;border-radius:4px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:12px;font-family:'Noto Sans JP',sans-serif">
-        <option value="10">10秒</option>
-        <option value="15">15秒</option>
-        <option value="20">20秒</option>
-        <option value="30" selected>30秒</option>
-        <option value="45">45秒</option>
-        <option value="60">60秒</option>
-      </select>
-    </div>
-    <div style="display:flex;justify-content:center;gap:1rem;margin-top:.75rem;flex-wrap:wrap">
-      <a href="admin.html" style="color:var(--bm);font-size:12px;text-decoration:none;border-bottom:1px dashed var(--bm);opacity:.65;padding-bottom:1px">⚙ 管理ページ</a>
-      <a href="https://pepapon.com/" target="_blank" rel="noopener" style="color:var(--teal);font-size:12px;text-decoration:none;border-bottom:1px solid var(--teal);opacity:.75;padding-bottom:1px">🌐 pepapon.com</a>
     </div>
   </section>
 
